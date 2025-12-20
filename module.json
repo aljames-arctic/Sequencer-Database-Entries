@@ -1,0 +1,36 @@
+{
+  "id": "sequencer-database-entries",
+  "title": "Sequencer Database Entries",
+  "version": "#{VERSION}#",
+  "authors": [
+    {
+      "name": "Alexander James",
+      "url": "https://github.com/aljames-arctic",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "esmodules": [
+    "src/module.js"
+  ],
+  "description": "<p>A light-weight way to add animations and sounds to the sequencer database.</p><p></p><p>Simply import the files into data/modules/sequencer-database-entries/assets, reload the world, and enjoy!</p>",
+  "flags": {
+    "canUpload": true
+  },
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
+    "relationships": {
+    "requires": [
+      {
+        "id": "sequencer",
+        "type": "module",
+        "compatibility": {}
+      }
+    ],
+    "recommends": []
+  }
+}
