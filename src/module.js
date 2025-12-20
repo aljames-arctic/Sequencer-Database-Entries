@@ -1,4 +1,3 @@
-import { generateDatabase } from './database-generator.js'
 import { RefreshDatabaseButton } from './class/refresh-button.js'
 
 const moduleId = "sequencer-database-entries";
