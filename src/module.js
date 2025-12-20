@@ -1,4 +1,5 @@
-import { generateDatabase } from './database-generator.js' 
+import { generateDatabase } from './database-generator.js'
+import { RefreshDatabaseButton } from './class/refresh-button.js'
 
 const moduleId = "sequencer-database-entries";
 
@@ -14,26 +15,27 @@ Hooks.once('init', async function() {
         onChange: value => {
             console.log(`SDE | assetsPath changed to: ${value}`);
         },
-        requiresReload: true
+        restricted: true
     });
 
     game.settings.register(moduleId, 'sequencerDatabase', {
-        scope: 'world',     // Synchronizes to all clients
-        config: false,      // Hidden from the settings menu
+        scope: 'world',
+        config: false,
         type: Object,
         default: {}
     });
+
+    game.settings.registerMenu(moduleId, "refreshMenu", {
+        name: "Build Database",
+        label: "Build Database",
+        hint: "Builds and saves the internal Sequencer database index from your assets folder. Requires an asset filepath set and saved.",
+        icon: "fas fa-sync",
+        type: RefreshDatabaseButton, 
+        restricted: true
+}   );
 })
 
 Hooks.once('ready', async function() {
-    if (game.user.isGM) {
-        const settingsPath = game.settings.get(moduleId, 'assetsPath');
-        if (!settingsPath || settingsPath == '') return;
-    
-        const DATABASE = await generateDatabase(settingsPath);
-        await game.settings.set(moduleId, 'sequencerDatabase', DATABASE);
-    }
-
     const SEQUENCER_DATABASE = game.settings.get(moduleId, 'sequencerDatabase');
     if (SEQUENCER_DATABASE && Object.keys(SEQUENCER_DATABASE).length > 0)
         Sequencer.Database.registerEntries(moduleId, SEQUENCER_DATABASE);
