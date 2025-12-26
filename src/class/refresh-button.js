@@ -15,15 +15,16 @@ export class RefreshDatabaseButton extends FormApplication {
         const settingsPath = game.settings.get(moduleId, 'assetsPath');
 
         if (!settingsPath) {
-            return ui.notifications.error("SDE | Please set an Assets Filepath first!");
+            return ui.notifications.error("SDBE | Please set an Assets Filepath first!");
         }
 
-        ui.notifications.info("SDE | Refreshing Database...");
+        ui.notifications.info("SDBE | Refreshing Database...");
         
         try {
             const DATABASE = await generateDatabase(settingsPath);
             await game.settings.set(moduleId, 'sequencerDatabase', DATABASE);
-            ui.notifications.info("SDE | Database Refresh Complete!");
+            
+            ui.notifications.info("SDBE | Database Refresh Complete!");
 
             new Dialog({
                 title: "Reload Required",
@@ -41,15 +42,15 @@ export class RefreshDatabaseButton extends FormApplication {
                         icon: '<i class="fas fa-times"></i>',
                         label: "No, Later",
                         callback: () => {
-                            ui.notifications.warn("SDE | Changes will not take effect until the next reload.");
+                            ui.notifications.warn("SDBE | Changes will not take effect until the next reload.");
                         }
                     }
                 },
                 default: "yes"
             }).render(true);
         } catch (err) {
-            console.error("SDE | Refresh Failed:", err);
-            ui.notifications.error("SDE | Refresh Failed. Check console for details.");
+            console.error("SDBE | Refresh Failed:", err);
+            ui.notifications.error("SDBE | Refresh Failed. Check console for details.");
         }
     }
 

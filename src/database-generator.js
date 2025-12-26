@@ -11,7 +11,7 @@ export async function generateDatabase(assetPath) {
 
             // Collision Check (same as before)
             if (a[b] && typeof a[b] === 'string') {
-                ui.notifications.warn('SDE | Conflict Detected while generating database!')
+                console.warn('SDBE | Conflict Detected', a[b], filepath);
                 a[b] = { '01': a[b] }; 
             } else if (!a[b]) {
                 a[b] = {};
@@ -44,8 +44,12 @@ function getKeyPath(filepath) {
     filepath = filepath.replaceAll(' ', '.');         // Spaces become periods
     filepath = filepath.replaceAll('\\', '.');        // Backslashes become periods
     filepath = filepath.replaceAll('/', '.');         // Forwardslashes become periods
-    filepath = filepath.replace(/\.+$/, "");          // Excess end of name periods are removed
+    filepath = filepath.replaceAll('%20', '_');       // Forwardslashes become periods
+    filepath = filepath.replace(/_?(\d+)$/, ".$1");   // Place a period before trailing numbers
+    filepath = filepath.replace(/\.(\d+)$/, (match, number) => `.${number.padStart(3, '0')}`); // Pad numbers to 3 digits
     filepath = filepath.replace(/\.{2,}/g, ".");      // Multiple periods are replaced by a single period
+    filepath = filepath.replace(/\.+$/, "");          // Excess end of name periods are removed
+    filepath = filepath.toLowerCase();
     
     return filepath;
 }
@@ -66,7 +70,7 @@ async function listAllFilesRecursive(assetPath) {
     return allFiles;
 
   } catch (err) {
-    ui.notifications.error("SDE | Error crawling directories.");
-    console.error(`SDE | ${err}`);
+    ui.notifications.error("SDBE | Error crawling directories.");
+    console.error(`SDBE | ${err}`);
   }
 }

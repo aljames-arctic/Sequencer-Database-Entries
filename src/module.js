@@ -13,7 +13,7 @@ Hooks.once('init', async function() {
         default: '',
         filePicker: 'folder', // This adds a folder picker button to the settings menu
         onChange: value => {
-            console.log(`SDE | assetsPath changed to: ${value}`);
+            console.log(`SDBE | assetsPath changed to: ${value}`);
         },
         restricted: true
     });
