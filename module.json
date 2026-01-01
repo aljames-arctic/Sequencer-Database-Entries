@@ -14,7 +14,14 @@
     "verified": "13"
   },
   "esmodules": [
-    "src/module.js"
+    "src/module.js",
+    "src/database-generator.js",
+    "src/class/refresh-button.js",
+    "src/class/import-export-button.js"
+  ],
+  "templates": [
+    "templates/import-database-form.html",
+    "templates/build-database-form.html"
   ],
   "description": "<p>A light-weight way to add animations and sounds to the sequencer database.</p><p></p><p>Simply import the files into data/modules/sequencer-database-entries/assets, reload the world, and enjoy!</p>",
   "flags": {

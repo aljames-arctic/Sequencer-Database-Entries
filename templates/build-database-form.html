@@ -1,0 +1,16 @@
+<form>
+    <div class="form-group">
+        <label for="assetPath">Assets Filepath</label>
+        <div class="form-fields">
+            <button type="button" class="file-picker" data-type="folder" data-target="assetPath" title="Browse Files" tabindex="-1">
+                <i class="fas fa-search"></i>
+            </button>
+            <input class="image" type="text" name="assetPath" placeholder="Path to asset folder" value="{{assetPath}}"/>
+        </div>
+    </div>
+    <footer class="sheet-footer flexrow">
+        <button type="submit" name="submit">
+            <i class="fas fa-sync"></i> Build Database
+        </button>
+    </footer>
+</form>

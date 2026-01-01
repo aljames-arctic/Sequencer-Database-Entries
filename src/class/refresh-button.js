@@ -1,22 +1,37 @@
 import { generateDatabase } from '../database-generator.js';
 
 export class RefreshDatabaseButton extends FormApplication {
-    constructor(...args) {
-        super(...args);
-        // When the menu is clicked, Foundry opens this class.
-        // We run our logic and then immediately close/cancel the window.
-        RefreshDatabaseButton.runRefresh().then(() => {
-            this.close(); 
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            title: "Build Sequencer Database",
+            template: "modules/sequencer-database-entries/templates/build-database-form.html",
+            id: "sdbe-build-form",
+            width: 400,
+            closeOnSubmit: false
         });
     }
 
-    static async runRefresh() {
+    getData(options) {
         const moduleId = "sequencer-database-entries";
-        const settingsPath = game.settings.get(moduleId, 'assetsPath');
+        const assetPath = game.settings.get(moduleId, 'assetsPath');
+        return {
+            assetPath: assetPath
+        };
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+    }
+
+    async _updateObject(event, formData) {
+        const moduleId = "sequencer-database-entries";
+        const settingsPath = formData.assetPath;
 
         if (!settingsPath) {
             return ui.notifications.error("SDBE | Please set an Assets Filepath first!");
         }
+        
+        await game.settings.set(moduleId, 'assetsPath', settingsPath);
 
         ui.notifications.info("SDBE | Refreshing Database...");
         
@@ -48,14 +63,10 @@ export class RefreshDatabaseButton extends FormApplication {
                 },
                 default: "yes"
             }).render(true);
+            this.close();
         } catch (err) {
             console.error("SDBE | Refresh Failed:", err);
             ui.notifications.error("SDBE | Refresh Failed. Check console for details.");
         }
-    }
-
-    // Overriding render so the window never actually appears to the user
-    render() {
-        return this;
     }
 }
